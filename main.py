@@ -1,6 +1,7 @@
 import simpy
 from building import Building
 from fso import FsoSimulation
+from nc import NcSimulation
 
 env = simpy.Environment()
 
@@ -8,7 +9,7 @@ floor_count = 10
 elevator_count = 3
 building = Building(env, floor_count, elevator_count)
 
-simulation = FsoSimulation(env, building)
+simulation = NcSimulation(env, building)
 
 env.process(simulation.run())
 
