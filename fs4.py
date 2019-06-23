@@ -20,7 +20,7 @@ class Fs4Simulation:
         elevator = self.fs4(self.building.sectors, person["floor"])
         if (elevator 
           and elevator.curr_floor == person["floor"] 
-          and len(elevator.riders) >= self.max_capacity):
+          and len(elevator.riders) < self.max_capacity):
             print(
               "[%i] Added rider to %s floor %i => %i" % 
               (self.env.now, elevator, person["floor"], person["to"])
