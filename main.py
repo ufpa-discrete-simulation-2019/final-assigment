@@ -4,6 +4,7 @@ import scipy.stats as st
 from building import Building
 from fso import FsoSimulation
 from nc import NcSimulation
+from fs4 import Fs4Simulation
 
 numpy.random.seed(51)
 env = simpy.Environment()
@@ -14,7 +15,7 @@ floor_count = 10
 elevator_count = 3
 building = Building(env, floor_count, elevator_count)
 
-simulation = NcSimulation(env, building)
+simulation = Fs4Simulation(env, building)
 
 env.process(simulation.run())
 

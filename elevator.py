@@ -16,7 +16,7 @@ class Elevator():
     self.still = False
 
   def add_rider(self, rider):
-    self.riders.append(rider)
+    self.riders.append(rider) 
 
   def add_stop(self, stop):
     if not stop in self.stops:
