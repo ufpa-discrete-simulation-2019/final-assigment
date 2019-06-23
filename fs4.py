@@ -21,13 +21,13 @@ class Fs4Simulation:
         if (elevator 
           and elevator.curr_floor == person["floor"] 
           and len(elevator.riders) >= self.max_capacity):
-          print(
-            "[%i] Added rider to %s floor %i => %i" % 
-            (self.env.now, elevator, person["floor"], person["to"])
-          )
+            print(
+              "[%i] Added rider to %s floor %i => %i" % 
+              (self.env.now, elevator, person["floor"], person["to"])
+            )
 
-          elevator.add_ride(person["to"])
-          self.awaiting.remove(person)
+            elevator.add_ride(person["to"])
+            self.awaiting.remove(person)
 
         elif elevator.curr_floor != person["floor"]:
           elevator.add_stop(person["floor"])
