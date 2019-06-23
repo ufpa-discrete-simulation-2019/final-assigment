@@ -14,7 +14,6 @@ class FsoSimulation():
     while True:
       for person in self.awaiting:
         elevator = self.fso(self.building.sectors, person["floor"])
-        print(elevator.curr_floor)
         if elevator and elevator.curr_floor == person["floor"]:
           print(
             "[%i] Added rider to %s floor %i => %i" % 
@@ -23,7 +22,7 @@ class FsoSimulation():
           
           elevator.add_ride(person["to"])
           self.awaiting.remove(person)
-        elif elevator.curr_floor != person["floor"]:
+        elif elevator and elevator.curr_floor != person["floor"]:
           elevator.add_stop(person["floor"])
 
       self.building.update()
