@@ -14,7 +14,7 @@ class FsoSimulation():
     while True:
       for person in self.awaiting:
         elevator = self.fso(self.building.sectors, person["floor"])
-
+        print(elevator.curr_floor)
         if elevator and elevator.curr_floor == person["floor"]:
           print(
             "[%i] Added rider to %s floor %i => %i" % 
@@ -55,5 +55,6 @@ class FsoSimulation():
             selected_car = sector.assigned_car
           
           lowest_sector = True
-    
+    if selected_car is None:
+      print(selected_car,"ITS NONE")
     return selected_car

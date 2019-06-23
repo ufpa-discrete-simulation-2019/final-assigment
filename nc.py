@@ -64,5 +64,4 @@ class NcSimulation():
       if newFs > fs:
         selected_car = elevator
         fs = newFs
-    
     return selected_car

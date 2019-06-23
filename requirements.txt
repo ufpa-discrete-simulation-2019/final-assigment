@@ -1,1 +1,3 @@
 simpy
+scipy
+numpy
