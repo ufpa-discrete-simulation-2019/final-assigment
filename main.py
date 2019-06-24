@@ -11,8 +11,8 @@ env = simpy.Environment()
 
 p = st.expon.rvs(size=10, loc=0,scale=2)
 
-floor_count = 10
-elevator_count = 3
+floor_count = 30
+elevator_count = 5
 building = Building(env, floor_count, elevator_count)
 
 simulation = Fs4Simulation(env, building)
@@ -21,12 +21,12 @@ env.process(simulation.run())
 
 time = 5
 for x in range(50):
-    from_floor = numpy.random.randint(0,10)
-    to_floor = numpy.random.randint(0,10)
+    from_floor = numpy.random.randint(0,floor_count)
+    to_floor = numpy.random.randint(0,floor_count)
     print(from_floor,to_floor)
     simulation.ask_ride(from_floor,to_floor)
     #env.run(until=time)
     #time += 5
 
 
-env.run(until=100)
+env.run(until=250)

@@ -29,7 +29,7 @@ class Fs4Simulation:
             elevator.add_ride(person["to"])
             self.awaiting.remove(person)
 
-        elif elevator.curr_floor != person["floor"]:
+        elif elevator and elevator.curr_floor  != person["floor"]:
           elevator.add_stop(person["floor"])
 
       self.building.update()
