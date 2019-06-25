@@ -3,7 +3,7 @@ class Fs4Simulation:
     self.env = env
     self.awaiting = []
     self.building = building
-    self.max_capacity = 4
+    self.max_capacity = 5
     self.priority = {}
 
   def ask_ride(self, floor, to):
@@ -17,7 +17,10 @@ class Fs4Simulation:
     while True:
       for person in self.awaiting:
         self.update_sectors_priorities(person['floor'], self.building.sectors)
-        elevator = self.fs4(self.building.sectors, person["floor"])
+        elevator, hp_sector = self.fs4(self.building.sectors, person["floor"])
+        if self.priority[tuple(hp_sector.floors)] > 5:
+          self.priority[tuple(hp_sector.floors)] = 1
+
         if (elevator 
           and elevator.curr_floor == person["floor"] 
           and len(elevator.riders) < self.max_capacity):
@@ -25,12 +28,18 @@ class Fs4Simulation:
               "[%i] Added rider to %s floor %i => %i" % 
               (self.env.now, elevator, person["floor"], person["to"])
             )
+            print(sorted(list(self.priority.items()), key=lambda x:x[1])[-1])
 
             elevator.add_ride(person["to"])
             self.awaiting.remove(person)
 
-        elif elevator and elevator.curr_floor  != person["floor"]:
-          elevator.add_stop(person["floor"])
+        elif elevator and elevator.curr_floor != person["floor"]:
+          if person['floor'] == 0:
+            if (self.get_priority_by_sector(hp_sector) > 5 
+              and not hp_sector.has_floor(0)):
+                elevator.add_stop(person["floor"])
+          else:
+            elevator.add_stop(person["floor"])
 
       self.building.update()
 
@@ -46,6 +55,14 @@ class Fs4Simulation:
       if sector.has_floor(floor):
         self.priority[tuple(sector.floors)] += 1
     return self.priority    
+
+  def get_priority_by_sector(self, sector):
+    return list(
+      filter(
+        lambda x: x[0] == tuple(sector.floors), 
+        list(self.priority.items())
+      )
+    )[0][1]
 
   def fs4(self, sectors, floor):
     # get free elevator cars -- at least one vacancy
@@ -73,4 +90,4 @@ class Fs4Simulation:
         s = min_dist
         selected_car = elvt
     hp_sector.assigned_car = selected_car
-    return selected_car
+    return selected_car, hp_sector

@@ -11,8 +11,8 @@ env = simpy.Environment()
 
 p = st.expon.rvs(size=10, loc=0,scale=2)
 
-floor_count = 30
-elevator_count = 5
+floor_count = 5
+elevator_count = 3
 building = Building(env, floor_count, elevator_count)
 
 simulation = Fs4Simulation(env, building)
